@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Road {
 	private List<String> vechicles = new ArrayList<String>();//路上有车
@@ -27,5 +29,22 @@ public class Road {
 				}
 			}
 		});
+		
+		//每隔1秒检查是不是绿灯，是绿灯相应路线上就减少一辆车
+		ScheduledExecutorService timer = Executors.newScheduledThreadPool(1);
+		timer.scheduleAtFixedRate(new Runnable() {
+			@Override
+			public void run() {
+				boolean lighted = Lamp.valueOf(Road.this.name).isLighted();//绿灯状态
+				if(vechicles.size()>0){//确保路线上有车
+					if(lighted){
+						System.out.println(vechicles.remove(0)+" is tranfering!");
+					}
+				}
+			}
+		}, 
+			1, 
+			1, 
+			TimeUnit.SECONDS);
 	}
 }
