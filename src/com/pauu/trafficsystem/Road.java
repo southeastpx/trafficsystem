@@ -20,7 +20,7 @@ public class Road {
 				//产生999辆车
 				for(int i=1;i<1000;i++){
 					try {
-						Thread.sleep(new Random().nextInt(1)*1000);
+						Thread.sleep((new Random().nextInt(10)+1)*100);
 						//生成某个方向上的第几辆车
 						vechicles.add(Road.this.name+"_"+i);
 					} catch (InterruptedException e) {

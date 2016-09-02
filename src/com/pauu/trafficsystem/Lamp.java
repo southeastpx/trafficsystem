@@ -20,19 +20,24 @@ public enum Lamp {
 	public void light(){
 		this.lighted = true;//点亮自己
 		if(opposite!=null){
-			Lamp lamp = Lamp.valueOf(opposite);
-			lamp.light();//点亮对面的灯
+			Lamp oppositeLamp = Lamp.valueOf(opposite);
+			oppositeLamp.light();//点亮对面的灯
 		}
+		System.out.println(name()+" lamp is green,下面总共应该有六个方向可以看到汽车穿过！");
 	}
 	//熄灭灯
-	public void blackOut(){
+	public Lamp blackOut(){
 		this.lighted = false;
 		if(opposite!=null){
-			Lamp lamp = Lamp.valueOf(opposite);
-			lamp.blackOut();
+			Lamp oppositeLamp = Lamp.valueOf(opposite);
+			oppositeLamp.blackOut();
 		}
+		Lamp nextLamp = null;
 		if(next!=null){
-			Lamp.valueOf(Lamp.this.next).light();
+			nextLamp = Lamp.valueOf(Lamp.this.next);
+			System.out.println("绿灯从"+name()+"切换成---->"+next);
+			nextLamp.light();
 		}
+		return nextLamp;
 	}
 }
